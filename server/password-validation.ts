@@ -1,5 +1,6 @@
 
-import * as passwordValidator from 'password-validator';
+//import * as passwordValidator from 'password-validator';
+const passwordValidator = require('password-validator');
 
 
 // Create a schema
@@ -16,6 +17,6 @@ schema
 
 
 
-export function validatePassword(password:string) {
-    return schema.validate(password, {list:true});
+export function validatePassword(password: string) {
+    return schema.validate(password, {list: true});
 }
