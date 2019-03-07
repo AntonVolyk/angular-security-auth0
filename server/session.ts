@@ -5,9 +5,11 @@ import moment = require('moment');
 export class Session {
     static readonly VALIDITY_MINUTS = 2;
     private validUntil: Moment;
+    user: User;
 
     constructor(sessionId: string, user: User) {
         this.validUntil = moment().add(Session.VALIDITY_MINUTS, 'minutes');
+        this.user = user;
     }
 
     isValid() {

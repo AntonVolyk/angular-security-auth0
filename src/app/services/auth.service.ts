@@ -1,5 +1,5 @@
 
-import {tap, shareReplay, map} from 'rxjs/operators';
+import {tap, shareReplay, map, filter} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, BehaviorSubject} from "rxjs";
@@ -14,24 +14,25 @@ export const ANONYMOUS_USER: User = {
 @Injectable()
 export class AuthService {
 
-    private subject = new BehaviorSubject<User>(ANONYMOUS_USER);
+    private subject = new BehaviorSubject<User>(undefined);
 
-    user$: Observable<User> = this.subject.asObservable();
+    user$: Observable<User> = this.subject.asObservable().pipe(filter(user => !!user));
 
     isLoggedIn$: Observable<boolean> = this.user$.pipe(map(user => !!user.id));
 
     isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(map(isLoggedIn => !isLoggedIn));
 
     constructor(private http: HttpClient) {
-
+        this.http.get<User>('/api/user')
+        .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
 
     }
 
-    signUp(email:string, password:string ) {
+    signUp(email: string, password: string ) {
 
         return this.http.post<User>('/api/signup', {email, password}).pipe(
             shareReplay(),
-            tap(user => this.subject.next(user)),);
+            tap(user => this.subject.next(user)));
 
     }
 

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "notes": {
-    "extra-cli-options": "--ssl --ssl-key key.pem --ssl-cert cert.pem"
+    "extra-cli-options": "--ssl --ssl-key key.pem --ssl-cert cnpm runert.pem"
   },
   "scripts": {
     "ng": "ng",
