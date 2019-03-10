@@ -18,6 +18,12 @@ export class SessionStore {
         return session && session.isValid();
     }
 
+    destroySession(sessionId: string) {
+        console.log(this.sessions[sessionId]);
+        delete this.sessions[sessionId];
+        console.log('after delete: ' + this.sessions);
+    }
+
 }
 
 export const sessionStore = new SessionStore();
